@@ -29,6 +29,10 @@ namespace FlowControl
                         LoopAndPrint();
                         break;
 
+                    case "3":
+                        GetTheThirdWord();
+                        break;
+
                     case "0":
                         Console.WriteLine("Avslutar...");
                         return;
@@ -47,6 +51,7 @@ namespace FlowControl
             Console.WriteLine("Skriv en siffra och tryck Enter för att välja:");
             Console.WriteLine("1) Köp biljetter");
             Console.WriteLine("2) Upprepa tio gånger");
+            Console.WriteLine("3) Det tredje ordet");
             Console.WriteLine("0) Avsluta");
             Console.WriteLine();
         }
@@ -104,6 +109,25 @@ namespace FlowControl
 
         }
 
+        private static void GetTheThirdWord()
+        {
+            while (true)
+            {
+                var input = ReadInput("Skriv en mening med minst 3 ord: ");
+                var splitInput = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+                if (splitInput.Length > 2)
+                {
+                    Console.WriteLine($"Det tredje ordet är: {splitInput[2]}\n");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Mening måste innehålla minst 3 ord. Försök igen.");
+                }
+            }
+        }
+
 
         // Helper Methods
 
@@ -126,7 +150,7 @@ namespace FlowControl
                     }
                 }
 
-                Console.WriteLine("Ange en giltigt nummer");
+                Console.WriteLine("Ange ett positivt heltal");
             }
 
         }
