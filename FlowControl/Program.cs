@@ -6,6 +6,7 @@ namespace FlowControl
         private const int YouthPrice = 80;
         private const int PensionerPrice = 90;
         private const int StandardPrice = 120;
+        private const int FreePrice = 0;
 
         static void Main(string[] args)
         {
@@ -47,6 +48,7 @@ namespace FlowControl
 
         private static void PrintMenu()
         {
+            Console.WriteLine();
             Console.WriteLine("==== Huvudmeny ====");
             Console.WriteLine("Skriv en siffra och tryck Enter för att välja:");
             Console.WriteLine("1) Köp biljetter");
@@ -59,7 +61,7 @@ namespace FlowControl
         private static void CalculateTicketPrice()
         {
             Console.WriteLine();
-            Console.WriteLine("— Ungdom eller pensionär / Sällskap (Biljettpris) —");
+            Console.WriteLine("— Ungdom eller pensionär / Sällskap (Biljettpris) —\n");
 
             var count = ReadInt("Ange hur många biljetter: ");
 
@@ -75,7 +77,7 @@ namespace FlowControl
                 var totalPrice = 0;
                 var age = 0;
 
-                Console.WriteLine($"\n== Ange åldrar för de {count} personerna nedan ==");
+                Console.WriteLine($"\n- Ange åldrar för de {count} personerna nedan -\n");
 
                 for (int i = 1; i <= count; i++)
                 {
@@ -85,6 +87,7 @@ namespace FlowControl
                     Console.WriteLine(output);
 
                 }
+
                 Console.WriteLine($"Antalet personer: {count}");
                 Console.WriteLine($"Totalkostnad: {totalPrice}kr\n");
             }
@@ -93,7 +96,7 @@ namespace FlowControl
         private static void LoopAndPrint()
         {
             Console.WriteLine();
-            Console.WriteLine("— Upprepa tio gånger —");
+            Console.WriteLine("— Upprepa tio gånger —\n");
             var input = ReadInput("Skriv en valfri text: ");
             for (int i = 1; i <= 10; i++)
             {
@@ -157,17 +160,26 @@ namespace FlowControl
 
         private static (int price, string output) GetTicketPrice(int age)
         {
+            if(age < 5 || age > 100)
+            {
+                return (FreePrice, "Barn under 5 och pensionärer över 100 går gratis.\n");
+            }
+
+
             if (age < 20)
             {
                 return (YouthPrice, $"Ungdomspris: {YouthPrice}kr\n");
             }
-            else if (age > 64)
-            {
-                return (PensionerPrice, $"Pensionärspris: {PensionerPrice}kr\n");
-            }
             else
             {
-                return (StandardPrice, $"Standardpris: {StandardPrice}kr\n");
+                if (age > 64)
+                {
+                    return (PensionerPrice, $"Pensionärspris: {PensionerPrice}kr\n");
+                }
+                else
+                {
+                    return (StandardPrice, $"Standardpris: {StandardPrice}kr\n");
+                }
             }
         }
     }
