@@ -3,6 +3,10 @@ namespace FlowControl
 {
     internal class Program
     {
+        private const int YouthPrice = 80;
+        private const int PensionerPrice = 90;
+        private const int StandardPrice = 120;
+
         static void Main(string[] args)
         {
             Run();
@@ -17,6 +21,10 @@ namespace FlowControl
 
                 switch (choice)
                 {
+                    case "1":
+                        CalculateTicketPrice();
+                        break;
+
                     case "0":
                         Console.WriteLine("Avslutar...");
                         return;
@@ -32,16 +40,84 @@ namespace FlowControl
         private static void PrintMenu()
         {
             Console.WriteLine("==== Huvudmeny ====");
+            Console.WriteLine("Skriv en siffra och tryck Enter för att välja:");
+            Console.WriteLine("1) Köp biljetter");
             Console.WriteLine("0) Avsluta");
             Console.WriteLine();
         }
 
-        // Helper Method
+        private static void CalculateTicketPrice()
+        {
+            var count = ReadInt("Ange hur många biljetter: ");
+
+            if (count < 2)
+            {
+                var age = ReadInt("Ange ålder: ");
+                var (_, output) = GetTicketPrice(age);
+
+                Console.WriteLine(output);
+            }
+            else
+            {
+                var totalPrice = 0;
+                var age = 0;
+
+                Console.WriteLine($"\n== Ange åldrar för de {count} personerna nedan ==");
+
+                for (int i = 1; i <= count; i++)
+                {
+                    age = ReadInt($"Ange ålder för person {i}: ");
+                    var (price, output) = GetTicketPrice(age);
+                    totalPrice += price;
+                    Console.WriteLine(output);
+
+                }
+                Console.WriteLine($"Antalet personer: {count}");
+                Console.WriteLine($"Totalkostnad: {totalPrice}kr\n");
+            }
+        }
+
+
+        // Helper Methods
 
         private static string ReadInput(string prompt)
         {
             Console.Write(prompt);
             return (Console.ReadLine() ?? string.Empty).Trim();
+        }
+
+        private static int ReadInt(string prompt)
+        {
+            while (true)
+            {
+                var s = ReadInput(prompt);
+                if (int.TryParse(s, out var value))
+                {
+                    if (value > -1)
+                    {
+                        return value;
+                    }
+                }
+
+                Console.WriteLine("Ange en giltigt nummer");
+            }
+
+        }
+
+        private static (int price, string output) GetTicketPrice(int age)
+        {
+            if (age < 20)
+            {
+                return (YouthPrice, $"Ungdomspris: {YouthPrice}kr\n");
+            }
+            else if (age > 64)
+            {
+                return (PensionerPrice, $"Pensionärspris: {PensionerPrice}kr\n");
+            }
+            else
+            {
+                return (StandardPrice, $"Standardpris: {StandardPrice}kr\n");
+            }
         }
     }
 }
