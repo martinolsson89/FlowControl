@@ -25,6 +25,10 @@ namespace FlowControl
                         CalculateTicketPrice();
                         break;
 
+                    case "2":
+                        LoopAndPrint();
+                        break;
+
                     case "0":
                         Console.WriteLine("Avslutar...");
                         return;
@@ -42,12 +46,16 @@ namespace FlowControl
             Console.WriteLine("==== Huvudmeny ====");
             Console.WriteLine("Skriv en siffra och tryck Enter för att välja:");
             Console.WriteLine("1) Köp biljetter");
+            Console.WriteLine("2) Upprepa tio gånger");
             Console.WriteLine("0) Avsluta");
             Console.WriteLine();
         }
 
         private static void CalculateTicketPrice()
         {
+            Console.WriteLine();
+            Console.WriteLine("— Ungdom eller pensionär / Sällskap (Biljettpris) —");
+
             var count = ReadInt("Ange hur många biljetter: ");
 
             if (count < 2)
@@ -75,6 +83,25 @@ namespace FlowControl
                 Console.WriteLine($"Antalet personer: {count}");
                 Console.WriteLine($"Totalkostnad: {totalPrice}kr\n");
             }
+        }
+
+        private static void LoopAndPrint()
+        {
+            Console.WriteLine();
+            Console.WriteLine("— Upprepa tio gånger —");
+            var input = ReadInput("Skriv en valfri text: ");
+            for (int i = 1; i <= 10; i++)
+            {
+                if (i == 10)
+                {
+                    Console.Write($"{i}.{input}\n\n");
+                }
+                else
+                {
+                    Console.Write($"{i}.{input}, ");
+                }
+            }
+
         }
 
 
