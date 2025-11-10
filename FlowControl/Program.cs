@@ -162,7 +162,7 @@ namespace FlowControl
         {
             if(age < 5 || age > 100)
             {
-                return (FreePrice, "Barn under 5 och pensionärer över 100 går gratis.\n");
+                return (FreePrice, $"Gratis: {FreePrice}kr\n");
             }
 
 
